@@ -1,1 +1,2 @@
-# G-search-
+# Google Search Plus
+googleの検索結果に他サービスへのリンクを追加するFirefox向けアドオン
