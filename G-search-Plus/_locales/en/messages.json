@@ -1,0 +1,23 @@
+{
+    "extName": {
+        "message": "G Search Plus"
+    },
+    "extDescription": {
+        "message": "Add a link to your favorite search service, such as Amazon or Twitter to google's search results."
+    },
+    "tittleLabel":{
+        "message": "Tittle"
+    },
+    "fUrlLabel":{
+        "message": "First harf of the URL"
+    },
+    "keywordLabel":{
+        "message": "Keyword"
+    },
+    "sUrlLabel":{
+        "message": "Second harf of the URL"
+    },
+    "saveButtonLabel":{
+        "message": "save"
+    }
+}

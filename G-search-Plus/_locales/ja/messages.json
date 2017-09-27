@@ -1,0 +1,23 @@
+{
+    "extName": {
+        "message": "G Search Plus"
+    },
+    "extDescription": {
+        "message": "googleの検索結果にAmazonやTwitterなど好きな検索サービスへのリンクを追加します。"
+    },
+    "tittleLabel":{
+        "message": "タイトル"
+    },
+    "fUrlLabel":{
+        "message": "URLの前半"
+    },
+    "keywordLabel":{
+        "message": "キーワード"
+    },
+    "sUrlLabel":{
+        "message": "URLの後半"
+    },
+    "saveButtonLabel":{
+        "message": "保存"
+    }
+}
