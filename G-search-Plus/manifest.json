@@ -1,19 +1,19 @@
 {
     "manifest_version": 2,
-    "version": "1.0",
-    
+    "version": "1.0.1",
+
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
     "default_locale": "en",
-    
+
     "applications": {
         "gecko": {
             "id": "G-Search-Plus@sienori"
         }
     },
-    
+
     "permissions": ["<all_urls>", "storage"],
-    
+
     "options_ui": {
         "page": "options/options.html"
     },
