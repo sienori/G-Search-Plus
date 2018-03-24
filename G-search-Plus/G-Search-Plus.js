@@ -1,34 +1,41 @@
-url=window.location.href;
-var reg = new RegExp("^https://www.google.");
+const url = window.location.href;
+const reg = new RegExp("^https://www.google.");
 
-//googleの検索結果ならば
-if(reg.test(url)){
-    var searchWord = document.querySelectorAll('#lst-ib') [0].value;
-    var settings=[];
+if (reg.test(url)) {
     browser.storage.sync.get(["settings"], function (value) {
-        settings = value.settings;
-        for(let i of settings){
-            tittle=i.tittle;
-            fUrl= i.fUrl;
-            sUrl= i.sUrl;
-            window.onload = showLink(tittle, fUrl + encodeURIComponent(searchWord) + sUrl);
-        }
+        const settings = value.settings;
+        showLinks(settings);
     });
 }
 
-//リンクを表示
-function showLink(title, url) {
-    var parent_object = document.querySelectorAll('._dMq') [0];
-    var manuitem = parent_object.children[0];
-    var element = document.createElement('a');
-    
-    element.setAttribute('class', manuitem.getAttribute('class'));
-    element.setAttribute('role', manuitem.getAttribute('role'));
-    element.setAttribute('tabindex', manuitem.getAttribute('tabindex'));
-    element.setAttribute('jsaction', manuitem.getAttribute('jsaction'));
-    element.setAttribute('data-rtid', manuitem.getAttribute('data-rtid'));
-    element.setAttribute('jsl', manuitem.getAttribute('jsl'));
+function showLinks(settings) {
+    const moreContainer = document.getElementById('lb').children[0];
+
+    if (moreContainer == undefined) {
+        setTimeout(() => {
+            showLinks(settings);
+        }, 100);
+        return;
+    }
+
+    const searchWord = document.getElementById('lst-ib').value;
+    for (let i of settings) {
+        const tittle = i.tittle;
+        const url = i.fUrl + encodeURIComponent(searchWord) + i.sUrl;
+        showLink(moreContainer, tittle, url);
+    }
+}
+
+function showLink(moreContainer, title, url) {
+    const manuItem = moreContainer.children[0];
+    const element = document.createElement('a');
+
+    const attributes = ['class', 'role', 'tabindex', 'jsaction', 'data-rtid', 'jsl'];
+    for (let attribute of attributes) {
+        element.setAttribute(attribute, manuItem.getAttribute(attribute));
+    }
     element.setAttribute('href', url);
-    element.innerHTML = title;
-    parent_object.appendChild(element);//追加
+    element.innerText = title;
+
+    moreContainer.appendChild(element);
 }
