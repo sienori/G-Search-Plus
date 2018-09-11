@@ -11,13 +11,14 @@ document.getElementsByClassName("addButton")[0].src=browser.runtime.getURL("imag
 
 browser.runtime.getURL
 
-formHtml='<tr class="form">'+
-'<td><input type="text" class="tittle"></td>'+
-'<td><input type="text" class="fUrl"></td>'+
-'<td class="keyword">+[Keyword]+</td>'+
-'<td><input type="text" class="sUrl"></td>'+
-    '<td><input class="deleteButton" type="image" src="'+browser.runtime.getURL("images/deleteButton.png")+'"></td>'+
-'</tr>';
+formHtml=`
+<tr class="form">
+    <td><input type="text" class="tittle"></td>
+    <td><input type="text" class="fUrl"></td>
+    <td class="keyword">+[Keyword]+</td>
+    <td><input type="text" class="sUrl"></td>
+    <td><input class="deleteButton" type="image" src="${browser.runtime.getURL("images/deleteButton.png")}"></td>
+</tr>`;
 
 document.addEventListener('click', function (e) {
     switch(e.target.className){
