@@ -4,25 +4,24 @@ const reg = new RegExp("^https://www.google.");
 if (reg.test(url)) {
     browser.storage.sync.get(["settings"], function (value) {
         const settings = value.settings;
-        showLinks(settings);
+        const observer = new MutationObserver((records, observer) => records.forEach(record => {
+            showLinks(record.addedNodes[0], settings, observer);
+        }));
+        observer.observe(document.getElementById('lb'), { childList: true });
     });
 }
 
-function showLinks(settings) {
-    const moreContainer = document.getElementById('lb').children[0];
-
-    if (moreContainer == undefined) {
-        setTimeout(() => {
-            showLinks(settings);
-        }, 100);
-        return;
-    }
-
-    const searchWord = document.getElementById('lst-ib').value;
-    for (let i of settings) {
-        const tittle = i.tittle;
-        const url = i.fUrl + encodeURIComponent(searchWord) + i.sUrl;
-        showLink(moreContainer, tittle, url);
+function showLinks(container, settings, observer) {
+    if (container && container.matches('div[jsowner]:not([jsowner="ab_options"])')) {
+        
+        const searchWord = document.getElementById('lst-ib').value;
+        for (let i of settings) {
+            const tittle = i.tittle;
+            const url = i.fUrl + encodeURIComponent(searchWord) + i.sUrl;
+            showLink(container, tittle, url);
+        }
+        
+        observer.disconnect();
     }
 }
 
