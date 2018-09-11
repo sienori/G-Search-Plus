@@ -12,6 +12,15 @@ td, th{
     text-align: center;
 }
 
+#forms button {
+    cursor: pointer;
+}
+#forms .form:nth-child(3) .upwardButton,
+#forms .form:last-child .downwardButton {
+    visibility: hidden;
+    pointer-events: none;
+}
+
 .addButton,.deleteButton{
     width: 25px;
     height: 25px;

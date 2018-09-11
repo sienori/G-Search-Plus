@@ -1,4 +1,4 @@
-var table=document.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
+var table=document.getElementById("forms").getElementsByTagName("tbody")[0];
 var form = document.getElementsByClassName("form");
 var addButton=document.getElementById("addButton");
 
@@ -11,13 +11,16 @@ document.getElementsByClassName("addButton")[0].src=browser.runtime.getURL("imag
 
 browser.runtime.getURL
 
-formHtml='<tr class="form">'+
-'<td><input type="text" class="tittle"></td>'+
-'<td><input type="text" class="fUrl"></td>'+
-'<td class="keyword">+[Keyword]+</td>'+
-'<td><input type="text" class="sUrl"></td>'+
-    '<td><input class="deleteButton" type="image" src="'+browser.runtime.getURL("images/deleteButton.png")+'"></td>'+
-'</tr>';
+formHtml=`
+<tr class="form">
+    <td><input type="text" class="tittle"></td>
+    <td><input type="text" class="fUrl"></td>
+    <td class="keyword">+[Keyword]+</td>
+    <td><input type="text" class="sUrl"></td>
+    <td><button class="upwardButton">&#x2b06;</button></td>
+    <td><button class="downwardButton">&#x2b07;</button></td>
+    <td><input class="deleteButton" type="image" src="${browser.runtime.getURL("images/deleteButton.png")}"></td>
+</tr>`;
 
 document.addEventListener('click', function (e) {
     switch(e.target.className){
@@ -29,6 +32,12 @@ document.addEventListener('click', function (e) {
             break;
         case "saveButton":
             saveForm();
+            break;
+        case "upwardButton":
+            upwardForm(e.target);
+            break;
+        case "downwardButton":
+            downwardForm(e.target);
             break;
     }
 });
@@ -63,6 +72,16 @@ function saveForm(){
     browser.storage.sync.set({
         'settings':settings
     });
+}
+
+function upwardForm(target) {
+    const form = target.closest('.form');
+    form.parentElement.insertBefore(form, form.previousElementSibling);
+}
+
+function downwardForm(target) {
+    const form = target.closest('.form');
+    form.parentElement.insertBefore(form, form.nextElementSibling.nextElementSibling);
 }
 
 setForm();
