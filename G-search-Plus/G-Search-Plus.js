@@ -14,13 +14,18 @@ if (reg.test(url)) {
 function showLinks(container, settings, observer) {
     if (container && container.matches('div[jsowner]:not([jsowner="ab_options"])')) {
         
+        const range = document.createRange();
+        range.selectNodeContents(container);
+        const df = range.extractContents();
+        
         const searchWord = document.getElementById('lst-ib').value;
         for (let i of settings) {
             const tittle = i.tittle;
             const url = i.fUrl + encodeURIComponent(searchWord) + i.sUrl;
-            showLink(container, tittle, url);
+            showLink(df, tittle, url);
         }
         
+        container.appendChild(df);
         observer.disconnect();
     }
 }
