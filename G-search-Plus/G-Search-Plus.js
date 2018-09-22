@@ -19,9 +19,8 @@ function showLinks(container, settings, observer) {
         const df = range.extractContents();
         
         const searchWord = document.getElementById('lst-ib').value;
-        for (let i of settings) {
-            const tittle = i.tittle;
-            const url = i.fUrl + encodeURIComponent(searchWord) + i.sUrl;
+        for (const { tittle, fUrl, sUrl } of settings) {
+            const url = fUrl + encodeURIComponent(searchWord) + sUrl;
             showLink(df, tittle, url);
         }
         
