@@ -19,7 +19,7 @@ function showLinks(container, settings, observer) {
     range.selectNodeContents(container);
     const df = range.extractContents();
 
-    const searchWord = document.getElementById("lst-ib").value;
+    const searchWord = document.getElementsByClassName("gLFyf")[0].value;
     for (const { tittle, fUrl, sUrl } of settings) {
       const url = fUrl + encodeURIComponent(searchWord) + sUrl;
       showLink(df, tittle, url);
