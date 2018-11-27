@@ -1,49 +1,51 @@
-body{
-    height: 120%;
+body {
+  height: 120%;
 }
 
-input{
-    width: 100%;
+input {
+  width: 100%;
 }
-tr{
-    height: 30px;
+tr {
+  height: 30px;
 }
-td, th{
-    text-align: center;
+td,
+th {
+  text-align: center;
 }
 
 #forms button {
-    cursor: pointer;
+  cursor: pointer;
 }
 #forms .form:nth-child(3) .upwardButton,
 #forms .form:last-child .downwardButton {
-    visibility: hidden;
-    pointer-events: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.addButton,.deleteButton{
-    width: 25px;
-    height: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    padding :4px;
-    color: #111;
-    border: 1px solid #bbb;
-    border-radius: 2px;
-    background-color: #fbfbfb;
+.addButton,
+.deleteButton {
+  width: 25px;
+  height: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4px;
+  color: #111;
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  background-color: #fbfbfb;
 }
 
-.saveButton{
-    width: auto;
-    height: 30px;
-    margin-left: auto;
-    color: #111;
-    border: 1px solid #bbb;
-    border-radius: 2px;
-    background-color: #fbfbfb;
+.saveButton {
+  width: auto;
+  height: 30px;
+  margin-left: auto;
+  color: #111;
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  background-color: #fbfbfb;
 }
 
-.example input{
-    color: #9a9a9a;
-    readonly:readonly;
+.example input {
+  color: #9a9a9a;
+  readonly: readonly;
 }
