@@ -1,45 +1,43 @@
-const url = window.location.href;
-const reg = new RegExp("^https://www.google.");
+const startObserve = async () => {
+  const currentUrl = window.location.href;
+  const googleUrl = "https://www.google.";
+  if (!currentUrl.startsWith(googleUrl)) return;
 
-if (reg.test(url)) {
-  browser.storage.sync.get(["settings"], function(value) {
-    const settings = value.settings;
-    const observer = new MutationObserver((records, observer) =>
-      records.forEach(record => {
-        showLinks(record.addedNodes[0], settings, observer);
-      })
-    );
-    observer.observe(document.getElementById("lb"), { childList: true });
-  });
-}
+  const { settings } = await browser.storage.sync.get(["settings"]);
 
-function showLinks(container, settings, observer) {
-  if (container && container.matches('div[jsowner]:not([jsowner="ab_options"])')) {
-    const range = document.createRange();
-    range.selectNodeContents(container);
-    const df = range.extractContents();
+  const observer = new MutationObserver((records, observer) =>
+    records.forEach(record => appendLinks(record.addedNodes[0], settings, observer))
+  );
+  observer.observe(document.querySelector("#lb"), { childList: true });
+};
+startObserve();
 
-    const searchWord = document.getElementsByClassName("gLFyf")[0].value;
-    for (const { tittle, fUrl, sUrl } of settings) {
-      const url = fUrl + encodeURIComponent(searchWord) + sUrl;
-      showLink(df, tittle, url);
-    }
+const appendLinks = async (container, settings, observer) => {
+  const containsSearchOption = container.querySelector("a").href.includes("preferences");
+  if (containsSearchOption) return;
 
-    container.appendChild(df);
-    observer.disconnect();
+  const menu = container.querySelector("g-menu");
+  const searchWord = document.querySelector("input[type='text']").value;
+
+  for (const { tittle, fUrl, sUrl } of settings) {
+    const url = fUrl + encodeURIComponent(searchWord) + sUrl;
+    appendLink(menu, tittle, url);
   }
-}
 
-function showLink(moreContainer, title, url) {
-  const manuItem = moreContainer.children[0];
-  const element = document.createElement("a");
+  const clonedMenu = menu.cloneNode(true);
+  container.replaceChild(clonedMenu, menu);
+  observer.disconnect();
 
-  const attributes = ["class", "role", "tabindex", "jsaction", "data-rtid", "jsl"];
-  for (let attribute of attributes) {
-    element.setAttribute(attribute, manuItem.getAttribute(attribute));
-  }
-  element.setAttribute("href", url);
-  element.innerText = title;
+};
 
-  moreContainer.appendChild(element);
-}
+const appendLink = (menu, title, url) => {
+  const menuItem = menu.querySelectorAll("g-menu-item")[1].cloneNode(true);
+
+  const newLink = document.createElement("a");
+  newLink.setAttribute("href", url);
+  newLink.innerText = title;
+
+  const oldLink = menuItem.querySelector("a");
+  menuItem.querySelector("div").replaceChild(newLink, oldLink);
+  menu.appendChild(menuItem);
+};
