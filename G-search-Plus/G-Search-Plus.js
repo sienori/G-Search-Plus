@@ -17,7 +17,7 @@ const appendLinks = async (container, settings, observer) => {
   if (containsSearchOption) return;
 
   const menu = container.querySelector("g-menu");
-  const searchWord = document.querySelector("input[type='text']").value;
+  const searchWord = document.querySelector("textarea").value;
 
   for (const { tittle, fUrl, sUrl } of settings) {
     const url = fUrl + encodeURIComponent(searchWord) + sUrl;
