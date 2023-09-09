@@ -1,34 +1,20 @@
-const startObserve = async () => {
-  const currentUrl = window.location.href;
-  const googleUrl = "https://www.google.";
-  if (!currentUrl.startsWith(googleUrl)) return;
+const updateMenu = async () => {
+  const allFilterMenu = document.querySelector("g-menu a[href^='https://maps.google.com/maps']")?.closest("g-menu");
+  if (!allFilterMenu) return;
 
   const { settings } = await browser.storage.sync.get(["settings"]);
-
-  const observer = new MutationObserver((records, observer) =>
-    records.forEach(record => appendLinks(record.addedNodes[0], settings, observer))
-  );
-  observer.observe(document.querySelector("#lb"), { childList: true });
-};
-startObserve();
-
-const appendLinks = async (container, settings, observer) => {
-  const containsSearchOption = container.querySelector("a").href.includes("preferences");
-  if (containsSearchOption) return;
-
-  const menu = container.querySelector("g-menu");
   const searchWord = document.querySelector("textarea").value;
 
   for (const { tittle, fUrl, sUrl } of settings) {
     const url = fUrl + encodeURIComponent(searchWord) + sUrl;
-    appendLink(menu, tittle, url);
+    appendLink(allFilterMenu, tittle, url);
   }
-
-  const clonedMenu = menu.cloneNode(true);
-  container.replaceChild(clonedMenu, menu);
-  observer.disconnect();
-
 };
+
+const isGoogleUrl = window.location.href.startsWith("https://www.google.");
+if (isGoogleUrl) {
+  setTimeout(updateMenu, 1000);
+}
 
 const appendLink = (menu, title, url) => {
   const menuItem = menu.querySelectorAll("g-menu-item")[1].cloneNode(true);
